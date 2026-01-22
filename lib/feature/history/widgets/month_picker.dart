@@ -69,7 +69,7 @@ class MonthPickerRow extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                  provider.loadData();  // monthly reload
+                  provider.loadData();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown[600],

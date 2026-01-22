@@ -28,8 +28,8 @@ class HistoryService {
   //   // return getMockMonthlyData(year, startMonth: startMonth, endMonth: endMonth);
   //   return getMockMonthlyData();
   // }
-  Future<List<PowerHistoryData>> getMonthlyData(int year, {int startMonth = 1, int endMonth = 12}) async {
+  Future<List<PowerHistoryData>> getMonthlyData(int year, int startMonth , int endMonth ) async {
     await Future.delayed(const Duration(seconds: 1));
-    return getMockMonthlyData(year, startMonth: startMonth, endMonth: endMonth);
+    return getMockMonthlyData(year, startMonth, endMonth);
   }
 }

@@ -111,6 +111,7 @@ class YearPickerRow extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      provider.loadData();
                       // setState(() {
                       //   _showYearMonthPicker = !_showYearMonthPicker;
                       //   _selectedBarIndex = -1;

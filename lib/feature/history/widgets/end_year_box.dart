@@ -1,8 +1,6 @@
-
-import 'package:flutter/cupertino.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../controllers/history_controller.dart';
 
 Future<void> showEndYearPicker(BuildContext context) async {
@@ -10,6 +8,9 @@ Future<void> showEndYearPicker(BuildContext context) async {
 
   int tempYear = provider.endYear;
   int? tempMonth = provider.endMonthForYear;
+  int tempStartMonth = provider.startMonthForYear;
+
+  final now = DateTime.now();
 
   await showDialog(
     context: context,
@@ -26,35 +27,64 @@ Future<void> showEndYearPicker(BuildContext context) async {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
-
                       Row(
                         children: [
                           IconButton(
                             icon: const Icon(Icons.arrow_left),
                             onPressed: () {
-                              setDialogState(() {
-                                tempYear--;
-                              });
+                              if (tempYear > 1980) {
+                                setDialogState(() {
+                                  tempYear--;
+                                  if (tempYear == now.year &&
+                                      tempMonth! > now.month) {
+                                    tempMonth = now.month;
+                                  }
+                                });
+                              }
                             },
                           ),
 
-                          DropdownButton<int>(
+                          DropdownButton2<int>(
                             value: tempYear,
-                            items: List.generate(10, (i) {
-                              final y = DateTime.now().year - 7 + i;
+                            // isExpanded: true,
+                            // isExpanded: true,
+                            dropdownStyleData: const DropdownStyleData(
+                              maxHeight: 200,
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                            ),
+                            // dropdownMaxHeight: 200,
+                            // dropdownMaxHeight:  200,
+                            items: List.generate(46, (i) {
+                              final y = now.year - i;
+                              final isFutureYear = y > now.year;
                               return DropdownMenuItem(
                                 value: y,
-                                child: Text('$y'),
+                                enabled: !isFutureYear,
+                                child: Text(
+                                  '$y',
+                                  style: TextStyle(
+                                    color: isFutureYear
+                                        ? Colors.grey
+                                        : Colors.black,
+                                  ),
+                                ),
                               );
                             }),
                             onChanged: (value) {
-                              setDialogState(() => tempYear = value!);
+                              if (value != null && value <= now.year ) {
+                                setDialogState(() {
+                                  tempYear = value;
+                                  if (tempYear == now.year &&
+                                      tempMonth! > now.month) {
+                                    tempMonth = now.month;
+                                  }
+                                });
+                              }
                             },
                           ),
 
@@ -62,21 +92,36 @@ Future<void> showEndYearPicker(BuildContext context) async {
                         ],
                       ),
 
-                      // MONTH Picker
+                      // MONTH SELECTOR
                       Row(
                         children: [
-
                           DropdownButton<int>(
                             value: tempMonth,
                             items: List.generate(12, (i) {
                               final m = i + 1;
+                              final isFutureMonth = (tempYear > now.year) ||
+                                  (tempYear == now.year && m > now.month) ||
+                                  ( m < tempStartMonth);
+
                               return DropdownMenuItem(
                                 value: m,
-                                child: Text('$m'),
+                                enabled: !isFutureMonth,
+                                child: Text(
+                                  '$m',
+                                  style: TextStyle(
+                                    color: isFutureMonth
+                                        ? Colors.grey
+                                        : Colors.black,
+                                  ),
+                                ),
                               );
                             }),
                             onChanged: (value) {
-                              setDialogState(() => tempMonth = value!);
+                              if (value != null &&
+                                  !(tempYear == now.year &&
+                                      value > now.month))  {
+                                setDialogState(() => tempMonth = value);
+                              }
                             },
                           ),
 
@@ -85,9 +130,15 @@ Future<void> showEndYearPicker(BuildContext context) async {
                           IconButton(
                             icon: const Icon(Icons.arrow_right),
                             onPressed: () {
-                              setDialogState(() {
-                                tempYear++;
-                              });
+                              if (tempYear < now.year) {
+                                setDialogState(() {
+                                  tempYear++;
+                                  if (tempYear == now.year &&
+                                      tempMonth! > now.month) {
+                                    tempMonth = now.month;
+                                  }
+                                });
+                              }
                             },
                           ),
                         ],
@@ -97,18 +148,14 @@ Future<void> showEndYearPicker(BuildContext context) async {
 
                   const SizedBox(height: 16),
 
-
                   SizedBox(
                     width: 80,
                     height: 35,
                     child: ElevatedButton(
                       onPressed: () {
-                        provider.updateYearRang(
-                          endMonth: tempMonth,
-                        );
-                        provider.setEndYear(tempYear);
+                        provider.updateYearRang(endMonth: tempMonth);
+                        provider.setStartYear(tempYear);
                         provider.loadData();
-
                         Navigator.pop(context);
                       },
                       child: const Text("OK"),

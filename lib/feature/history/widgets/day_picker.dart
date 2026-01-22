@@ -53,7 +53,7 @@ Widget buildHourlyDateSelection(BuildContext context) {
           const SizedBox(width: 30),
           ElevatedButton(
             onPressed: () {
-
+              provider.loadData();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.brown[600],

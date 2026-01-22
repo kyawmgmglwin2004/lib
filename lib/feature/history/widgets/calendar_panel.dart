@@ -117,7 +117,7 @@ class CalendarPanel extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 provider.closeCalendarPanel();
-                provider.loadData();
+                // provider.loadData();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.brown[600],

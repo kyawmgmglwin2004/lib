@@ -39,8 +39,9 @@ List<PowerHistoryData> getMockDailyData(int year, int month) {
   final random = Random();
   final daysInMonth = DateTime(year, month + 1, 0).day;
 
-  return List.generate(daysInMonth, (day) {
-    final baseValue = 10000.0 + random.nextInt(5000);
+  return List.generate(daysInMonth, (index) {
+    final day = index + 1;
+    final baseValue = 100000.0 + random.nextInt(5000);
     return PowerHistoryData(
       label: "$day",
       generatedEnergy: baseValue * 0.6,
@@ -52,7 +53,7 @@ List<PowerHistoryData> getMockDailyData(int year, int month) {
 }
 
 
-List<PowerHistoryData> getMockMonthlyData(int year, {int startMonth = 1, int endMonth = 12}) {
+List<PowerHistoryData> getMockMonthlyData(int year,  int startMonth, int endMonth) {
   final random = Random();
 
   return List.generate(endMonth - startMonth + 1, (index) {

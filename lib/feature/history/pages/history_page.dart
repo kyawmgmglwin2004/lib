@@ -142,7 +142,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ],
             ),
           ),
-        ),
+                  ),
           if (provider.showCalendarPanel)
             Center(
               child: CalendarPanel(),

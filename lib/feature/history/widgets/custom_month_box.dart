@@ -1,5 +1,3 @@
-
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../controllers/history_controller.dart';
@@ -9,6 +7,8 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
 
   int tempYear = provider.selectedMonth?.year ?? DateTime.now().year;
   int? tempMonth = provider.selectedMonth?.month;
+
+  final now = DateTime.now();
 
   await showDialog(
     context: context,
@@ -50,7 +50,7 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
 
                   const SizedBox(height: 2),
 
-                  // YEAR SELECTOR
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -58,7 +58,10 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
                         icon: const Icon(Icons.arrow_back_sharp,
                             size: 25, color: Color(0xFF6D4C41)),
                         onPressed: () {
-                          setDialogState(() => tempYear--);
+
+                          if (tempYear > 2000) {
+                            setDialogState(() => tempYear--);
+                          }
                         },
                       ),
                       Text(
@@ -72,7 +75,10 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
                         icon: const Icon(Icons.arrow_forward_sharp,
                             size: 25, color: Color(0xFF6D4C41)),
                         onPressed: () {
-                          setDialogState(() => tempYear++);
+
+                          if (tempYear < now.year) {
+                            setDialogState(() => tempYear++);
+                          }
                         },
                       ),
                     ],
@@ -93,10 +99,16 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
                     ),
                     itemBuilder: (context, index) {
                       final month = index + 1;
+
+                      final isFutureMonth = (tempYear > now.year) ||
+                          (tempYear == now.year && month > now.month);
+
                       final isSelected = tempMonth == month;
 
                       return GestureDetector(
-                        onTap: () {
+                        onTap: isFutureMonth
+                            ? null
+                            : () {
                           setDialogState(() {
                             tempMonth = month;
                           });
@@ -104,7 +116,9 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
                         child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: isSelected
+                            color: isFutureMonth
+                                ? Colors.grey[300]
+                                : isSelected
                                 ? Colors.brown[600]
                                 : Colors.brown[100],
                             borderRadius: BorderRadius.circular(6),
@@ -112,7 +126,9 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
                           child: Text(
                             '$month月',
                             style: TextStyle(
-                              color: isSelected
+                              color: isFutureMonth
+                                  ? Colors.grey
+                                  : isSelected
                                   ? Colors.white
                                   : const Color(0xFF6D4C41),
                               fontWeight: FontWeight.bold,
@@ -125,7 +141,7 @@ Future<void> showCustomMonthPicker(BuildContext context) async {
 
                   const SizedBox(height: 8),
 
-                  // OK BUTTON
+
                   SizedBox(
                     width: 70,
                     height: 30,
