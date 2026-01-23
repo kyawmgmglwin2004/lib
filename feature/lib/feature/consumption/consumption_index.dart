@@ -1,0 +1,1 @@
+export './pages/consumption_page.dart';
