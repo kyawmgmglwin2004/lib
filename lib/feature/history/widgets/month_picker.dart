@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +14,7 @@ class MonthPickerRow extends StatelessWidget {
     final monthFormat = DateFormat("yyyy/MM");
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,26 +23,26 @@ class MonthPickerRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              color: Color(0xFF843C0B),
             ),
           ),
 
-          const SizedBox(height: 8),
-
           Row(
             children: [
-              // ▼ Month Selector Box
               Container(
                 padding: const EdgeInsets.only(right: 30, left: 10),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.brown, width: 2),
+                  border: Border.all(color: Color(0xFF843C0B), width: 2),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Row(
                   children: [
                     IconButton(
-                      icon: Icon(Icons.calendar_month,
-                          size: 30, color: Colors.brown[600]),
+                      icon: Icon(
+                        Icons.calendar_month,
+                        size: 30,
+                        color: Color(0xFF843C0B),
+                      ),
                       onPressed: () {
                         showCustomMonthPicker(context);
                       },
@@ -72,7 +71,7 @@ class MonthPickerRow extends StatelessWidget {
                   provider.loadData();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.brown[600],
+                  backgroundColor: Color(0xFF843C0B),
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   shape: RoundedRectangleBorder(

@@ -9,10 +9,7 @@ class DisplayTypeRadio extends StatelessWidget {
   final DisplayType type;
   final String label;
 
-  const DisplayTypeRadio({
-    required this.type,
-    required this.label
-  });
+  const DisplayTypeRadio({required this.type, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +18,17 @@ class DisplayTypeRadio extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        provider.closeCalendarPanel();
         provider.setDisplayType(type);
       },
       child: Container(
         height: 30,
-        width: 110,
+        width: 100,
         padding: const EdgeInsets.only(left: 8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? const Color(0xFF6D4C41) : Colors.grey[300]!,
+            color: isSelected ? const Color(0xFF843C0B) : Colors.grey[300]!,
             width: isSelected ? 2 : 1,
           ),
           color: Colors.white,
@@ -44,18 +42,12 @@ class DisplayTypeRadio extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected
-                      ? const Color(0xFF6D4C41)
-                      : Colors.grey,
+                  color: isSelected ? const Color(0xFF843C0B) : Colors.grey,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Icon(
-                Icons.circle,
-                size: 8,
-                color: Color(0xFF6D4C41),
-              )
+                  ? const Icon(Icons.circle, size: 8, color: Color(0xFF843C0B))
                   : null,
             ),
             const SizedBox(width: 5),
@@ -63,10 +55,8 @@ class DisplayTypeRadio extends StatelessWidget {
               label,
               style: TextStyle(
                 fontSize: 12,
-                fontWeight:
-                isSelected ? FontWeight.bold : FontWeight.normal,
-                color:
-                isSelected ? Colors.red : Colors.grey[700],
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                color: isSelected ? Color(0xFF843C0B) : Colors.grey[700],
               ),
             ),
           ],
@@ -74,6 +64,4 @@ class DisplayTypeRadio extends StatelessWidget {
       ),
     );
   }
-
-
 }

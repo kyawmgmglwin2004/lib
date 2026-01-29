@@ -6,67 +6,74 @@ import 'package:provider/provider.dart';
 import '../controllers/history_controller.dart';
 
 Widget buildHourlyDateSelection(BuildContext context) {
-  final DateFormat _dateFormat = DateFormat('yyyy/MM/dd');
+  final DateFormat dateFormat = DateFormat('yyyy/MM/dd');
   final provider = context.watch<HistoryProvider>();
 
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        '日付選択',
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey,
-        ),
-      ),
-      const SizedBox(height: 8),
-
-      Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(right: 9),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.brown, width: 2),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.calendar_month,
-                      size: 28, color: Colors.brown[600]),
-                  onPressed: () {
-                    provider.toggleCalendarPanel();
-                  },
-                ),
-                Text(
-                  _dateFormat.format(provider.selectedDate),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
-            ),
+  return Padding(
+    padding: EdgeInsets.all(10),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          '日付選択',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF843C0B),
           ),
-          const SizedBox(width: 30),
-          ElevatedButton(
-            onPressed: () {
-              provider.loadData();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.brown[600],
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 35),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+        ),
+
+        Row(
+          children: [
+            Container(
+              width: 200,
+              // padding: const EdgeInsets.only(bott ),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.brown, width: 2),
+                borderRadius: BorderRadius.circular(7),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.calendar_month,
+                      size: 28,
+                      color: Color(0xFF843C0B),
+                    ),
+                    onPressed: () {
+                      provider.toggleCalendarPanel();
+                    },
+                  ),
+                  SizedBox(width: 20),
+                  Text(
+                    dateFormat.format(provider.selectedDate),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
               ),
             ),
-            child: const Text("検索", style: TextStyle(fontSize: 16)),
-          ),
-        ],
-      ),
-    ],
+            const SizedBox(width: 30),
+            ElevatedButton(
+              onPressed: () {
+                provider.loadData();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF843C0B),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 35),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("検索", style: TextStyle(fontSize: 16)),
+            ),
+          ],
+        ),
+      ],
+    ),
   );
 }

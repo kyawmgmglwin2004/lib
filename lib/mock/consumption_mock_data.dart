@@ -26,8 +26,8 @@ class ConsumptionData {
     required this.todayTotalGeneration,
     required this.todayTotalSelfConsumption,
     required this.todayTotalPowerUsage,
-    required this.imagePath
-});
+    required this.imagePath,
+  });
 
   String formatValue(double value) {
     return value.toStringAsFixed(3);
@@ -35,20 +35,20 @@ class ConsumptionData {
 
   factory ConsumptionData.fromJson(Map<String, dynamic> json) {
     return ConsumptionData(
-        facilityId: json['facilityId'],
-        facilityName: json['facilityName'],
-        cityInfo: json['cityInfo'],
-        measurementTimePeriod: json['measurementTimePeriod'],
-        cumulativePowerGeneration: (json['cumulativePowerGeneration'] as num).toInt(),
-        currentPowerGeneration: json['currentPowerGeneration'],
-        currentSelfConsumption: json['currentSelfConsumption'],
-        currentPowerUsage: json['currentPowerUsage'],
-        todayTotalGeneration: json['todayTotalGeneration'],
-        todayTotalSelfConsumption: json['todayTotalSelfConsumption'],
-        todayTotalPowerUsage: json['todayTotalPowerUsage'],
-        imagePath: json['imagePath']
+      facilityId: json['facilityId'],
+      facilityName: json['facilityName'],
+      cityInfo: json['cityInfo'],
+      measurementTimePeriod: json['measurementTimePeriod'],
+      cumulativePowerGeneration: (json['cumulativePowerGeneration'] as num)
+          .toInt(),
+      currentPowerGeneration: json['currentPowerGeneration'],
+      currentSelfConsumption: json['currentSelfConsumption'],
+      currentPowerUsage: json['currentPowerUsage'],
+      todayTotalGeneration: json['todayTotalGeneration'],
+      todayTotalSelfConsumption: json['todayTotalSelfConsumption'],
+      todayTotalPowerUsage: json['todayTotalPowerUsage'],
+      imagePath: json['imagePath'],
     );
-
   }
   Map<String, dynamic> toJson() {
     return {
@@ -63,11 +63,11 @@ class ConsumptionData {
       'todayTotalGeneration': todayTotalGeneration,
       'todayTotalSelfConsumption': todayTotalSelfConsumption,
       'todayTotalPowerUsage': todayTotalPowerUsage,
-      'imagePath' : imagePath,
+      'imagePath': imagePath,
     };
   }
 
-// Future<FacilitySearch?> fetchFacility(String id) async {
+  // Future<FacilitySearch?> fetchFacility(String id) async {
   //   await Future.delayed(const Duration(seconds: 1));
   //
   //   try {
@@ -76,6 +76,4 @@ class ConsumptionData {
   //     return null;
   //   }
   // }
-
-
 }

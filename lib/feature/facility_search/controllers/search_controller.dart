@@ -11,35 +11,41 @@ class FacilitySearchController extends ChangeNotifier {
   final FlutterSecureStorage storage = FlutterSecureStorage();
   final FacilityService service = FacilityService();
 
-  bool isLoading = false;
+  bool isLoading = false; //状態をロードするため
 
   Future<void> search(BuildContext context) async {
+    final facilityId = facilityController.text;
+    if(facilityId.length == 0) {
+      showErrorDialog(context);
+      return;
+    }
     if (isLoading) return;
 
     isLoading = true;
     notifyListeners();
 
-    final id = facilityController.text;
-    ConsumptionData? result = await service.findFacilityById(id);
+    ConsumptionData? result = await service.findFacilityById(facilityId);
 
     isLoading = false;
     notifyListeners();
 
     if (result == null) {
-      showErrorDialog(context);
+
+      showErrorDialog(context); // facilityIdが見つからない場合のエラーダイアログ
     } else {
-      await storage.write(key: 'facilityId', value: id);
+      await storage.write(key: 'facilityId', value: facilityId);
       Navigator.pushReplacementNamed(
         context,
         AppRoute.consumption,
-          arguments: ConsumptionArgs(facilityId: id, data: result)
+        arguments: ConsumptionArgs(facilityId: facilityId, data: result),
       );
     }
-  }
+  }  // facilityId を含む検索データの場合
 
   @override
   void dispose() {
     facilityController.dispose();
     super.dispose();
-  }
-}
+  } //メモリリークを防ぐため
+
+} //UI状態管理用

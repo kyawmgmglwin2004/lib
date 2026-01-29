@@ -9,6 +9,11 @@ class CalendarPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<HistoryProvider>();
+    final focusedMonth = DateTime(
+      provider.focusedDate!.year,
+      provider.focusedDate!.month,
+    );
+    final lastMonth = DateTime(DateTime.now().year, DateTime.now().month);
 
     return Container(
       width: 320,
@@ -31,21 +36,23 @@ class CalendarPanel extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: const [
-                        Icon(Icons.calendar_month_outlined,
-                            size: 30, color: Color(0xFF6D4C41)),
+                        Icon(
+                          Icons.calendar_month_outlined,
+                          size: 30,
+                          color: Color(0xFF843C0B),
+                        ),
                         SizedBox(width: 6),
                         Text(
                           '日付選択',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF6D4C41),
+                            color: Color(0xFF843C0B),
                           ),
                         ),
                       ],
@@ -54,29 +61,33 @@ class CalendarPanel extends StatelessWidget {
                       onPressed: () {
                         provider.closeCalendarPanel();
                       },
-                      icon: const Icon(Icons.close_rounded,
-                          color: Color(0xFF6D4C41)),
+                      icon: const Icon(
+                        Icons.close_rounded,
+                        color: Color(0xFF843C0B),
+                      ),
                     ),
                   ],
                 ),
                 TableCalendar(
-                  firstDay:
-                  DateTime.now().subtract(const Duration(days: 365)),
+                  firstDay: DateTime.now().subtract(const Duration(days: 365)),
                   lastDay: DateTime.now(),
-                  focusedDay: provider.selectedDate,
+                  focusedDay: provider.focusedDate!,
                   selectedDayPredicate: (day) =>
                       isSameDay(day, provider.selectedDate),
                   onDaySelected: (selectedDay, focusedDay) {
                     provider.setDate(selectedDay, focusedDay);
                   },
+                  onPageChanged: (focusedDay) {
+                    provider.setFocusedDate(focusedDay);
+                  },
+
                   rowHeight: 30,
                   daysOfWeekVisible: false,
                   calendarStyle: CalendarStyle(
                     cellMargin: const EdgeInsets.all(1),
                     selectedDecoration: BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Colors.brown[600],
-
+                      color: Color(0xFF843C0B),
                     ),
                     selectedTextStyle: const TextStyle(
                       color: Colors.white,
@@ -88,7 +99,9 @@ class CalendarPanel extends StatelessWidget {
                       shape: BoxShape.rectangle,
 
                       border: Border.all(
-                          color: const Color(0xFF6D4C41), width: 2),
+                        color: const Color(0xFF843C0B),
+                        width: 2,
+                      ),
                     ),
                     todayTextStyle: const TextStyle(
                       color: Colors.white,
@@ -98,10 +111,18 @@ class CalendarPanel extends StatelessWidget {
                   headerStyle: HeaderStyle(
                     formatButtonVisible: false,
                     titleCentered: true,
-                    leftChevronIcon: Icon(Icons.arrow_back,
-                        color: Colors.brown[600]),
-                    rightChevronIcon: Icon(Icons.arrow_forward,
-                        color: Colors.brown[600]),
+                    leftChevronIcon: Icon(
+                      Icons.arrow_back,
+                      color: Color(0xFF843C0B),
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.arrow_forward,
+                      color:
+                          focusedMonth.isAfter(lastMonth) ||
+                              focusedMonth.isAtSameMomentAs(lastMonth)
+                          ? Colors.grey
+                          : Colors.brown[600],
+                    ),
                   ),
                 ),
               ],
@@ -110,17 +131,15 @@ class CalendarPanel extends StatelessWidget {
 
           const Spacer(),
 
-
           SizedBox(
             height: 30,
             width: 70,
             child: ElevatedButton(
               onPressed: () {
                 provider.closeCalendarPanel();
-                // provider.loadData();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.brown[600],
+                backgroundColor: Color(0xFF843C0B),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
