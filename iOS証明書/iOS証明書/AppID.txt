@@ -1,0 +1,3 @@
+App ID:	GDSBJZUPHR.jp.co.ntt.east.NttEastOsvaEms
+Description：NTT EAST OSVA EMS
+Bundle ID：jp.co.ntt.east.NttEastOsvaEms
