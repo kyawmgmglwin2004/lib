@@ -70,7 +70,10 @@ class _ConsumptionPageState extends State<ConsumptionPage> {
 
 
   Future<void> _onRefresh() async {
+
     await context.read<ConsumptionProvider>().refresh(widget.facilityId);
+
+
     setState(() {
       _lastUpdated = DateTime.now();
     });

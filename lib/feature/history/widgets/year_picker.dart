@@ -134,20 +134,25 @@ class YearPickerRow extends StatelessWidget {
             children: [
               SizedBox(height: 20),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xFF843C0B),
-                  padding: const EdgeInsets.symmetric(
-                    // vertical: 1,
-                    horizontal: 30,
+                onPressed: provider.loading
+                    ? null
+                    : () => provider.loadData(),
+                style: ButtonStyle(
+                  // backgroundColor: Color(),
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                    return const Color(0xFF843C0B);
+                  }),
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                    return Colors.white;
+                  }),
+                  // padding: const EdgeInsets.symmetric(horizontal: 35),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric( horizontal: 30),
                   ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
-                onPressed: () {
-                  provider.loadData();
-                },
                 child: Text("検索", style: TextStyle(fontSize: 14)),
               ),
             ],
@@ -155,5 +160,5 @@ class YearPickerRow extends StatelessWidget {
         ],
       ),
     );
-  }
+  }   //年選択セクション
 }

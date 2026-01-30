@@ -7,11 +7,24 @@ import '../services/facility_service.dart';
 import '../widgets/error_dialog.dart';
 
 class FacilitySearchController extends ChangeNotifier {
-  final TextEditingController facilityController = TextEditingController();
-  final FlutterSecureStorage storage = FlutterSecureStorage();
-  final FacilityService service = FacilityService();
+  // final TextEditingController facilityController = TextEditingController();
+  final TextEditingController facilityController ;
+  // final FlutterSecureStorage storage = FlutterSecureStorage();
+  final FlutterSecureStorage storage ;
+  // final FacilityService service = FacilityService();
+  final FacilityService service ;
 
   bool isLoading = false; //状態をロードするため
+
+  FacilitySearchController({
+    TextEditingController? facilityController,
+    FlutterSecureStorage? storage,
+    FacilityService? service,
+}) :
+        facilityController = facilityController ?? TextEditingController(),
+        storage = storage ?? const FlutterSecureStorage(),
+        service = service ?? FacilityService();
+
 
   Future<void> search(BuildContext context) async {
     final facilityId = facilityController.text;

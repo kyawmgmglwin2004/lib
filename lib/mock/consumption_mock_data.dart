@@ -67,13 +67,4 @@ class ConsumptionData {
     };
   }
 
-  // Future<FacilitySearch?> fetchFacility(String id) async {
-  //   await Future.delayed(const Duration(seconds: 1));
-  //
-  //   try {
-  //     return mockFacilities.firstWhere((f) => f.id == id);
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
 }

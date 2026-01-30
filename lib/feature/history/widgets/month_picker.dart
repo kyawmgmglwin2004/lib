@@ -67,15 +67,23 @@ class MonthPickerRow extends StatelessWidget {
               const SizedBox(width: 12),
 
               ElevatedButton(
-                onPressed: () {
-                  provider.loadData();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF843C0B),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 35),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                onPressed: provider.loading
+                    ? null
+                    : () => provider.loadData(),
+                style: ButtonStyle(
+                  // backgroundColor: Color(),
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                    return const Color(0xFF843C0B);
+                  }),
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                    return Colors.white;
+                  }),
+                  // padding: const EdgeInsets.symmetric(horizontal: 35),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric( horizontal: 35),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
                 child: const Text("検索", style: TextStyle(fontSize: 16)),
@@ -86,4 +94,4 @@ class MonthPickerRow extends StatelessWidget {
       ),
     );
   }
-}
+} //月選択ボックス用

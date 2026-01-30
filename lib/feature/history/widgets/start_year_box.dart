@@ -196,7 +196,6 @@ Future<void> showYearPicker(BuildContext context) async {
                     ),
                   ),
 
-                  // const SizedBox(height: 16),
                   const Divider(color: Colors.grey),
                   Padding(
                     padding: EdgeInsets.only(
@@ -248,7 +247,6 @@ Future<void> showYearPicker(BuildContext context) async {
                                 endMonth: tempEndMonth,
                               );
                               provider.setStartYear(tempYear);
-                              // provider.loadData();
                               Navigator.pop(context);
                             },
                             child: const Text("閉じる"),
@@ -265,4 +263,4 @@ Future<void> showYearPicker(BuildContext context) async {
       );
     },
   );
-}
+} //開始年選択ボックス

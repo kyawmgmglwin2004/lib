@@ -64,4 +64,4 @@ class DisplayTypeRadio extends StatelessWidget {
       ),
     );
   }
-}
+} //選択されたラジオボタンの場合

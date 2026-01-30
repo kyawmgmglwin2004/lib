@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import '../controllers/search_controller.dart';
 
 class FacilitySearchPage extends StatefulWidget {
-  const FacilitySearchPage({super.key});
+
+  final FacilitySearchController? controller;
+
+  // const FacilitySearchPage({super.key});
+
+  const FacilitySearchPage({super.key, this.controller});
 
   @override
   State<FacilitySearchPage> createState() => _FacilitySearchPageState();
@@ -14,7 +19,7 @@ class _FacilitySearchPageState extends State<FacilitySearchPage> {
   @override
   void initState() {
     super.initState();
-    controller = FacilitySearchController(); // コントローラー生成
+    controller = widget.controller ?? FacilitySearchController(); // コントローラー生成
     controller.addListener(() {
       setState(() {});
     });// controller 側で notifyListeners() が呼ばれたら画面を再描画する

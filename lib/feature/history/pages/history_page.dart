@@ -20,9 +20,8 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   String _facilityId = "";
 
-  // For get facilityId
-  // facilityIdを取得する
-  final FlutterSecureStorage storage = FlutterSecureStorage();
+
+  final FlutterSecureStorage storage = FlutterSecureStorage(); // facilityIdを取得する
 
   Future<void> getFacilityId() async {
     try {
@@ -48,22 +47,22 @@ class _HistoryPageState extends State<HistoryPage> {
     }
   }
 
-  //For get History data
-  //履歴データを取得する
+
+
   @override
   void initState() {
     super.initState();
     getFacilityId();
-  }
+  }  //履歴データを取得する
 
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<HistoryProvider>();
 
-    //For landscape view
-    //横向き表示の場合
+
+
     final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+        MediaQuery.of(context).orientation == Orientation.landscape;  //横向き表示の場合
     final graphHeight = isLandscape ? 260.0 : 420.0;
 
     return Scaffold(
@@ -97,22 +96,17 @@ class _HistoryPageState extends State<HistoryPage> {
                       ],
                     ),
 
-                    //For DisplayType View
-                    //DisplayType ビューの場合
-                    buildDisplayTypeSection(context),
+                    buildDisplayTypeSection(context), //DisplayType ビューの場合
 
-                    //For Display Selection view
-                    // 表示選択ビューの場合
-                    buildDateSelectionSection(context),
+                    buildDateSelectionSection(context),  // 表示選択ビューの場合
                     SizedBox(height: 50),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: SizedBox(
                         height: graphHeight,
-                        //For build Graph
-                        //グラフ構築用
-                        child: buildGraphArea(context),
+
+                        child: buildGraphArea(context),   //グラフ構築用
                       ),
                     ),
 
@@ -148,9 +142,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
             ),
           ),
-          //For Day picker view
-          //曜日選択ビューの場合
-          if (provider.showCalendarPanel) const Center(child: CalendarPanel()),
+          if (provider.showCalendarPanel) const Center(child: CalendarPanel()),  //曜日選択ビューの場合
         ],
       ),
     );

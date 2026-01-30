@@ -14,7 +14,7 @@ Future<void> showEndYearPicker(BuildContext context) async {
 
   await showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: false, //タッチクローズを防ぐため
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setDialogState) {
@@ -130,7 +130,7 @@ Future<void> showEndYearPicker(BuildContext context) async {
                         ],
                       ),
 
-                      // MONTH SELECTOR
+
                       Row(
                         children: [
                           Container(
@@ -278,7 +278,6 @@ Future<void> showEndYearPicker(BuildContext context) async {
                               startMonth: tempStartMonth,
                             );
                             provider.setStartYear(tempYear);
-                            // provider.loadData();
                             Navigator.pop(context);
                           },
                           child: const Text("閉じる"),
@@ -294,4 +293,4 @@ Future<void> showEndYearPicker(BuildContext context) async {
       );
     },
   );
-}
+} //年末ピッカーボックス

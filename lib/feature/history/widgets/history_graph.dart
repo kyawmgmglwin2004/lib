@@ -8,7 +8,7 @@ import '../controllers/history_controller.dart';
 Widget buildGraphArea(BuildContext context) {
   final provider = context.watch<HistoryProvider>();
 
-  if (provider.currentData.isEmpty) {
+  if (provider.loading) {
     return const Center(
       child: CircularProgressIndicator(
         color: Color(0xFFC55A11),
@@ -272,7 +272,7 @@ Widget buildGraphArea(BuildContext context) {
       );
     },
   );
-}
+} // グリッドビルダー用
 
 class _LegendItem extends StatelessWidget {
   final Color color;
@@ -320,4 +320,4 @@ List<BarChartGroupData> _buildBarGroups(HistoryProvider provider) {
       ],
     );
   });
-}
+} //棒グラフの値

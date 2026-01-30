@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../mock/history_mock_data.dart';
 
-//Display Type View
-//表示タイプビュー
+
+
 Widget buildDisplayTypeSection(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 12),
@@ -36,4 +36,4 @@ Widget buildDisplayTypeSection(BuildContext context) {
       ],
     ),
   );
-}
+} //表示タイプビュー

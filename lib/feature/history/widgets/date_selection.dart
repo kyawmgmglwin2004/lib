@@ -7,6 +7,7 @@ import '../controllers/history_controller.dart';
 import 'day_picker.dart';
 import 'month_picker.dart';
 
+
 Widget buildDateSelectionSection(BuildContext context) {
   final provider = context.watch<HistoryProvider>();
 
@@ -18,4 +19,4 @@ Widget buildDateSelectionSection(BuildContext context) {
     case DisplayType.monthly:
       return const YearPickerRow();
   }
-}
+} //選択日の選択

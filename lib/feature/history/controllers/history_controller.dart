@@ -29,6 +29,7 @@ class HistoryProvider extends ChangeNotifier {
 
   int _selectedBarIndex = -1;  // グラフで選択されたバーのインデックス（-1 は未選択）
 
+  bool _isLoading = false;
 
   // Getter（外部から参照するため）
   List<PowerHistoryData> get currentData => _currentData;
@@ -45,12 +46,19 @@ class HistoryProvider extends ChangeNotifier {
   int get endYear => _endYear;
   int get startMonthForYear => _startMonthForYear;
   int? get endMonthForYear => _endMonthForYear;
-
   DateTime? get focusedDate => _focusedDate;
+  bool   get loading  =>_isLoading;
 
   Future<void> init() async {
     await loadData();
   }// 初期化処理
+
+
+  void _setLoading(bool v) {
+    _isLoading = v;
+    notifyListeners();
+  }
+
 
 
   DateTime get startYearMonth => DateTime(_startYear, _startMonthForYear, 1); // 年・月範囲の開始年月（例：2025/01/01）
@@ -68,34 +76,46 @@ class HistoryProvider extends ChangeNotifier {
 
 
   Future<void> loadData() async {
-    switch (_selectedDisplayType) {
 
-      case DisplayType.hourly:  // 時間別：選択日の時間別データを取得
-        _currentData = await _historyService.getHourlyData(
-          selectedDate.year,
-          selectedDate.month,
-          selectedDate.day,
-        );
-        break;
+    if(_isLoading) return;
 
+    _setLoading(true);
+    await Future.delayed(const Duration(seconds: 1));
 
-      case DisplayType.daily:  // 日別：選択月の1ヶ月分の日別データを取得
-        if (selectedMonth != null) {
-          _currentData = await _historyService.getDailyData(
-            selectedMonth!.year,
-            selectedMonth!.month,
+    try {
+      switch (_selectedDisplayType) {
+
+        case DisplayType.hourly:  // 時間別：選択日の時間別データを取得
+          _currentData = await _historyService.getHourlyData(
+            selectedDate.year,
+            selectedDate.month,
+            selectedDate.day,
           );
-        }
-        break;
+          break;
 
 
-      case DisplayType.monthly: // 月別：年＋開始月〜終了月の範囲で月次データを取得
-        _currentData = await _historyService.getMonthlyData(
-          selectedDate.year,
-          startMonthForYear,
-          endMonthForYear!,
-        );
-        break;
+        case DisplayType.daily:  // 日別：選択月の1ヶ月分の日別データを取得
+          if (selectedMonth != null) {
+            _currentData = await _historyService.getDailyData(
+              selectedMonth!.year,
+              selectedMonth!.month,
+            );
+          }
+          break;
+
+
+        case DisplayType.monthly: // 月別：年＋開始月〜終了月の範囲で月次データを取得
+          _currentData = await _historyService.getMonthlyData(
+            selectedDate.year,
+            startMonthForYear,
+            endMonthForYear!,
+          );
+          break;
+      }
+    } catch(e) {
+      _setLoading(false);
+    } finally {
+      _setLoading(false);
     }
 
     notifyListeners();  // データ更新をUIへ通知

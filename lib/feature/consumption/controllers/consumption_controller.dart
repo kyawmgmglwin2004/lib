@@ -48,6 +48,8 @@ class ConsumptionProvider extends ChangeNotifier {
 
   Future<void> refresh(String facilityId) async {
 
+    if (_loading) return;
+
     _setLoading(true);  // ローディング開始
 
     _error = null;  // 直前のエラーをクリア
